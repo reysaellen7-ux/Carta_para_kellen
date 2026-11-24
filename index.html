@@ -188,11 +188,14 @@ button {
 </main>
 
 <script>
-function esconderTudo() {
+ function esconderTudo() {
   document.getElementById('inicio').style.display = 'none';
   document.getElementById('cartas').style.display = 'none';
   document.getElementById('carta1').style.display = 'none';
   document.getElementById('carta2').style.display = 'none';
+
+  const area = document.getElementById('areaEllen');
+  if (area) area.style.display = 'none';
 }
 
 function abrirCartas() {
@@ -240,9 +243,7 @@ document.querySelector('main').insertAdjacentHTML(
         placeholder="Seu e-mail"
         style="width:90%;padding:12px;margin:8px">
 
-      <input id="senhaEllen" type="password"
-        placeholder="Sua senha"
-        style="width:90%;padding:12px;margin:8px">
+
 
       <button onclick="entrarEllen()">Entrar</button>
 
@@ -277,25 +278,42 @@ function abrirAreaEllen() {
 }
 
 async function entrarEllen() {
-  const email = document.getElementById('emailEllen').value;
-  const senha = document.getElementById('senhaEllen').value;
+  const email = document.getElementById('emailEllen').value.trim();
   const mensagem = document.getElementById('mensagemEllen');
 
-  mensagem.textContent = 'Verificando acesso...';
-
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password: senha
-  });
-
-  if (error) {
-    mensagem.textContent = 'Não consegui entrar. Confira seu e-mail e senha.';
+  if (!email) {
+    mensagem.textContent = 'Digite seu e-mail.';
     return;
   }
 
-  document.getElementById('editorEllen').style.display = 'block';
-  mensagem.textContent = 'Bem-vinda ao seu cantinho! ❤️';
+  mensagem.textContent = 'Enviando seu link de acesso...';
+
+  const { error } = await supabaseClient.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: 'https://reysaellen7-ux.github.io/Carta_para_kellen/',
+      shouldCreateUser: false
+    }
+  });
+
+  if (error) {
+    mensagem.textContent = 'Erro ao enviar o link. Tente novamente.';
+    return;
+  }
+
+  mensagem.textContent = 'Link enviado! Confira seu e-mail para entrar. ❤️';
 }
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (session) {
+    esconderTudo();
+    document.getElementById('areaEllen').style.display = 'block';
+    document.getElementById('editorEllen').style.display = 'block';
+    document.getElementById('mensagemEllen').textContent =
+      'Bem-vinda ao seu cantinho! ❤️';
+  }
+});
+
 
 async function salvarCarta() {
   const titulo = document.getElementById('tituloNova').value.trim();
