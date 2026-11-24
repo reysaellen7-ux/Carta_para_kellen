@@ -222,5 +222,106 @@ const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
-</script></body>
+</script><script>
+document.getElementById('inicio').insertAdjacentHTML(
+  'beforeend',
+  '<button onclick="abrirAreaEllen()">🔒 Área da Ellen</button>'
+);
+
+document.querySelector('main').insertAdjacentHTML(
+  'beforeend',
+  `
+  <section id="areaEllen" style="display:none">
+    <div class="card">
+      <h2>Meu cantinho secreto ❤️</h2>
+      <p style="text-align:center">Entre para escrever novas cartas.</p>
+
+      <input id="emailEllen" type="email"
+        placeholder="Seu e-mail"
+        style="width:90%;padding:12px;margin:8px">
+
+      <input id="senhaEllen" type="password"
+        placeholder="Sua senha"
+        style="width:90%;padding:12px;margin:8px">
+
+      <button onclick="entrarEllen()">Entrar</button>
+
+      <p id="mensagemEllen"></p>
+
+      <div id="editorEllen" style="display:none">
+        <hr>
+        <h2>Escrever nova carta 💌</h2>
+
+        <input id="tituloNova" placeholder="Título da carta"
+          style="width:90%;padding:12px;margin:8px">
+
+        <input id="dataNova" type="date"
+          style="width:90%;padding:12px;margin:8px">
+
+        <textarea id="conteudoNovo" placeholder="Escreva sua carta..."
+          rows="10" style="width:90%;padding:12px;margin:8px"></textarea>
+
+        <button onclick="salvarCarta()">Salvar carta ❤️</button>
+      </div>
+
+      <button onclick="voltarCartas()">← Voltar</button>
+    </div>
+  </section>
+  `
+);
+
+function abrirAreaEllen() {
+  esconderTudo();
+  document.getElementById('areaEllen').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+async function entrarEllen() {
+  const email = document.getElementById('emailEllen').value;
+  const senha = document.getElementById('senhaEllen').value;
+  const mensagem = document.getElementById('mensagemEllen');
+
+  mensagem.textContent = 'Verificando acesso...';
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password: senha
+  });
+
+  if (error) {
+    mensagem.textContent = 'Não consegui entrar. Confira seu e-mail e senha.';
+    return;
+  }
+
+  document.getElementById('editorEllen').style.display = 'block';
+  mensagem.textContent = 'Bem-vinda ao seu cantinho! ❤️';
+}
+
+async function salvarCarta() {
+  const titulo = document.getElementById('tituloNova').value.trim();
+  const conteudo = document.getElementById('conteudoNovo').value.trim();
+  const data_carta = document.getElementById('dataNova').value;
+
+  if (!titulo || !conteudo || !data_carta) {
+    alert('Preencha o título, a data e a carta.');
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('cartas')
+    .insert([{ titulo, conteudo, data_carta }]);
+
+  if (error) {
+    alert('Não foi possível salvar: ' + error.message);
+    return;
+  }
+
+  alert('Sua carta foi salva com carinho! ❤️');
+
+  document.getElementById('tituloNova').value = '';
+  document.getElementById('conteudoNovo').value = '';
+  document.getElementById('dataNova').value = '';
+}
+
+  </script></body>
 </html>
