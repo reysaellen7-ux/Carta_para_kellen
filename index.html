@@ -211,5 +211,16 @@ function voltarCartas() {
   abrirCartas();
 }
 </script>
-</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://zisdskabygeeehvddnow.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_R4Zo9_QUiOpH597PQR3ksw_2Hm--JHC";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+</script></body>
 </html>
