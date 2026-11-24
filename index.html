@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,8 +40,11 @@ button {
   padding: 15px 27px;
   font-size: 15px;
   margin: 15px;
+  cursor: pointer;
 }
-#carta { display: none; }
+#cartas, #carta1, #carta2 {
+  display: none;
+}
 .card {
   background: white;
   padding: 30px 24px;
@@ -56,10 +58,17 @@ button {
   font-style: italic;
   font-size: 21px;
 }
+.data {
+  text-align: center;
+  color: #a17b7e;
+  font-style: italic;
+  font-size: 15px;
+}
 </style>
 </head>
 <body>
 <main>
+
 <section id="inicio">
   <p style="text-align:center;letter-spacing:4px">UMA CARTA PARA VOCÊ</p>
   <div style="font-size:45px">♡</div>
@@ -67,78 +76,139 @@ button {
   <p style="text-align:center;font-style:italic">
     Algumas pessoas fazem a vida ficar mais bonita.
   </p>
-  <button onclick="abrir()">Abrir minha carta ❤️</button>
+  <button onclick="abrirCartas()">Abrir minhas cartas ❤️</button>
 </section>
 
-<section id="carta">
+<section id="cartas">
+  <div class="card">
+    <div style="font-size:35px;color:#864c56">♡</div>
+    <h2>Nossas cartas</h2>
+    <p style="text-align:center">
+      Cada pedacinho do que sinto por você merece ser escrito.
+    </p>
+    <button onclick="abrirCarta('carta1')">Minha Kellen ❤️</button>
+    <button onclick="abrirCarta('carta2')">Nos dias mais comuns, eu escolho você ❤️</button>
+  </div>
+</section>
+
+<section id="carta1">
   <div class="card">
     <div style="font-size:30px;color:#864c56">♡</div>
     <h2>Minha Kellen,</h2>
-
     <p>
       Às vezes eu tento encontrar palavras que consigam
       explicar o que sinto por você. E, mesmo quando elas
       parecem pequenas, quero continuar tentando, porque
       você merece saber o quanto é especial na minha vida.
     </p>
-
     <p>
       Eu gosto da nossa companhia, dos nossos momentos,
       das conversas, dos risos e até daquilo que ainda
       estamos aprendendo uma sobre a outra.
     </p>
-
     <p>
       Não quero prometer uma vida perfeita. Quero algo
       mais verdadeiro: presença, diálogo, carinho,
       parceria e a vontade de escolher uma à outra
       também nos dias comuns.
     </p>
-
     <p>
       Quero dividir os planos, as pequenas alegrias,
       os desafios e tudo de bonito que a vida ainda
       pode trazer.
     </p>
-
     <p>
       Quando penso em Partilhar, penso nisso:
       não apenas em estar apaixonada, mas em desejar
       compartilhar a vida com você.
     </p>
-
     <p>
       Obrigada por ser você e por fazer parte da
       minha história.
     </p>
-
     <p style="color:#864c56;font-style:italic">
       Com todo o meu amor. ❤️
     </p>
-
     <hr style="border:0;border-top:1px solid #eadbd6;margin:30px 0">
-
     <p class="final">
       Que a gente nunca perca a vontade de
       escolher uma à outra.
     </p>
   </div>
-
-  <p style="text-align:center">
-    Nossa história está apenas começando. ❤️
-  </p>
-
+  <p style="text-align:center">Nossa história está apenas começando. ❤️</p>
   <button onclick="window.open('https://www.youtube.com/results?search_query=Rubel+Partilhar+musica','_blank')">
     ♫ Ouvir Partilhar – Rubel
   </button>
+  <button onclick="voltarCartas()">← Voltar às cartas</button>
 </section>
+
+<section id="carta2">
+  <div class="card">
+    <div style="font-size:30px;color:#864c56">♡</div>
+    <h2>Nos dias mais comuns, eu escolho você.</h2>
+    <p class="data">24 de novembro de 2026</p>
+
+    <p>Amorrr, hoje é dia 24 de novembro, um dia aleatório no meio da semana. Estou escrevendo isso enquanto você está dormindo.</p>
+
+    <p>Temos só duas semanas desde que oficializamos nosso namoro e já tivemos alguns altos e baixos delicados, mas isso é papo pra outra carta...</p>
+
+    <p>As coisas mais normais do nosso dia a dia são as que mais me mostram o quanto estou te amando. Tipo quando você está morrendo de sono, mas fica lutando contra ele só para passar mais um pouquinho de tempo comigo. Quando demonstra seu ciúme bobo, que eu acho que você só sente porque ainda não sabe o quanto sou apaixonada por cada detalhe seu.</p>
+
+    <p>Tô aqui, deitada do seu lado, pensando em uma coisa...</p>
+
+    <p>Já ouvi falar em amores de domingo, sabe? Aqueles que aparecem pra tirar o tédio ou a tristeza dos domingos. Tem também os amores de final de semana, que são mais pra curtição. Mas você é meu amor da semana inteira. ❤️</p>
+
+    <p>Eu amo acordar com você na segunda-feira, mesmo com seu despertador me irritando kkkkk. Amo aquela vontade de ficar mais um pouquinho na cama, agarradinha com você, mesmo sabendo que daqui a pouco você vai levantar pra trabalhar. E eu mal vejo você sair e já fico ansiosa pra te ver de novo à noite.</p>
+
+    <p>Na terça e na quarta parece que tudo se repete, e eu amo isso! Te dou um monte de beijinhos e volto a dormir. Amo acordar e ver que já tem uma mensagem sua. Amo quando você me liga no meio do dia só pra dizer que já tá com saudade. KKKK, a gente praticamente acabou de sair da cama!</p>
+
+    <p>Amo que na quinta-feira a gente já começa a planejar o final de semana. Eu falo pra você fazer suas coisinhas, ter seu espaço, cuidar das suas individualidades, mas, no fundo, acho tão gostoso quando você me inclui nos seus planos e também encontra um jeitinho de se encaixar nos meus.</p>
+
+    <p>Enfim, eu amo as sextas, os sábados e os domingos.</p>
+
+    <p>Amo te acordar no sábado ou no domingo de manhã, mesmo sabendo que você provavelmente queria dormir mais, já que acorda cedo a semana inteira. Mas é tão gostoso te ver acordando sem aquela pressa de ter que levantar e sair pra trabalhar.</p>
+
+    <p>(Eu já te falei que amo ver seus olhos de manhã?)</p>
+
+    <p>Amo até quando você me irrita ficando bravinha do nada. Amo mais ainda quando a gente se resolve. ♥️</p>
+
+    <p>Eu tenho mais medo de te perder do que consigo demonstrar. Queria que você pudesse se enxergar pelos meus olhos, só pra entender o quanto é incrível e o quanto eu sou apaixonada por cada detalhe seu.</p>
+
+    <p>Porque eu não quero ser seu amor só quando o domingo estiver triste ou quando chegar o final de semana.</p>
+
+    <p>Eu quero ser seu amor na segunda, na terça, na quarta... até naqueles dias chatinhos em que nada de especial acontece.</p>
+
+    <p>Você é meu amor da semana inteira. E, se depender de mim, de todas as semanas que ainda estão por vir.</p>
+
+    <p style="color:#864c56;font-style:italic">Te amo, amor. ❤️</p>
+  </div>
+  <button onclick="voltarCartas()">← Voltar às cartas</button>
+</section>
+
 </main>
 
 <script>
-function abrir() {
+function esconderTudo() {
   document.getElementById('inicio').style.display = 'none';
-  document.getElementById('carta').style.display = 'block';
+  document.getElementById('cartas').style.display = 'none';
+  document.getElementById('carta1').style.display = 'none';
+  document.getElementById('carta2').style.display = 'none';
+}
+
+function abrirCartas() {
+  esconderTudo();
+  document.getElementById('cartas').style.display = 'block';
   window.scrollTo(0,0);
+}
+
+function abrirCarta(id) {
+  esconderTudo();
+  document.getElementById(id).style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function voltarCartas() {
+  abrirCartas();
 }
 </script>
 </body>
