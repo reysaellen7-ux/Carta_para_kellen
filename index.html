@@ -201,11 +201,14 @@ button {
 
   const area = document.getElementById('areaEllen');
   if (area) area.style.display = 'none';
-}
 
+  const cartaSalva = document.getElementById('cartaSalva');
+  if (cartaSalva) cartaSalva.style.display = 'none';
+}
 function abrirCartas() {
   esconderTudo();
   document.getElementById('cartas').style.display = 'block';
+  carregarCartas();
   window.scrollTo(0,0);
 }
 
@@ -318,8 +321,69 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
       'Bem-vinda ao seu cantinho! ❤️';
   }
 });
+function abrirCartaSalva(carta) {
+  esconderTudo();
 
+  let secao = document.getElementById('cartaSalva');
 
+  if (!secao) {
+    secao = document.createElement('section');
+    secao.id = 'cartaSalva';
+
+    secao.innerHTML = `
+      <div class="card">
+        <div style="font-size:30px;color:#864c56">♡</div>
+        <h2 id="tituloCartaSalva"></h2>
+        <p id="dataCartaSalva" class="data"></p>
+        <div id="textoCartaSalva"></div>
+      </div>
+      <button onclick="voltarCartas()">← Voltar às cartas</button>
+    `;
+
+    document.querySelector('main').appendChild(secao);
+  }
+
+  document.getElementById('tituloCartaSalva').textContent = carta.titulo;
+
+  const [ano, mes, dia] = carta.data_carta.split('-');
+  document.getElementById('dataCartaSalva').textContent =
+    `${dia}/${mes}/${ano}`;
+
+  const texto = document.getElementById('textoCartaSalva');
+  texto.innerHTML = '';
+
+  carta.conteudo.split('\n').forEach(linha => {
+    const paragrafo = document.createElement('p');
+    paragrafo.textContent = linha;
+    texto.appendChild(paragrafo);
+  });
+
+  secao.style.display = 'block';
+  window.scrollTo(0,0);
+      }
+async function carregarCartas() {
+  const { data, error } = await supabaseClient
+    .from('cartas')
+    .select('id, titulo, conteudo, data_carta')
+    .order('data_carta', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao carregar cartas:', error);
+    return;
+  }
+
+  const lista = document.getElementById('cartasNovas');
+  lista.innerHTML = '';
+
+  data.forEach(carta => {
+    const botao = document.createElement('button');
+    botao.textContent = carta.titulo;
+    botao.onclick = () => abrirCartaSalva(carta);
+    lista.appendChild(botao);
+  });
+    };
+  
+  
 async function salvarCarta() {
   const titulo = document.getElementById('tituloNova').value.trim();
   const conteudo = document.getElementById('conteudoNovo').value.trim();
@@ -344,6 +408,8 @@ async function salvarCarta() {
   document.getElementById('tituloNova').value = '';
   document.getElementById('conteudoNovo').value = '';
   document.getElementById('dataNova').value = '';
+
+  await carregarCartas();
 }
 
   </script></body>
